@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Quiz System</title>
+    <link rel="stylesheet" href="quiz-styles.css">
+</head>
+<body>
+    <!-- Preloader -->
+    <div id="preloader" class="preloader">
+        <div class="spinner"></div>
+        <p>Loading Quiz System...</p>
+    </div>
+
+    <!-- Home Screen -->
+    <div id="homeScreen" class="screen">
+        <nav class="navbar">
+            <div class="nav-container">
+                <h1 class="logo">📝 QuizMaster</h1>
+                <div class="nav-info">
+                    <span>Professional Quiz Platform</span>
+                </div>
+            </div>
+        </nav>
+
+        <section class="hero-quiz">
+            <div class="hero-content">
+                <h1>Welcome to QuizMaster</h1>
+                <p>Test your knowledge with our comprehensive quiz system</p>
+            </div>
+        </section>
+
+        <section class="setup-section">
+            <div class="container">
+                <h2>Customize Your Quiz</h2>
+                
+                <!-- Topic Selection -->
+                <div class="setup-card">
+                    <h3>📚 Select Topic</h3>
+                    <div class="topic-grid">
+                        <div class="topic-btn" data-topic="web">
+                            <span>🌐</span>
+                            <p>Web Development</p>
+                        </div>
+                        <div class="topic-btn" data-topic="python">
+                            <span>🐍</span>
+                            <p>Python Programming</p>
+                        </div>
+                        <div class="topic-btn" data-topic="database">
+                            <span>🗄️</span>
+                            <p>Database Design</p>
+                        </div>
+                        <div class="topic-btn" data-topic="oop">
+                            <span>🎯</span>
+                            <p>Object-Oriented Programming</p>
+                        </div>
+                        <div class="topic-btn" data-topic="ai">
+                            <span>🤖</span>
+                            <p>Artificial Intelligence</p>
+                        </div>
+                        <div class="topic-btn" data-topic="security">
+                            <span>🔒</span>
+                            <p>Cybersecurity</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings -->
+                <div class="setup-card">
+                    <h3>⚙️ Quiz Settings</h3>
+                    <div class="settings-grid">
+                        <div class="setting-group">
+                            <label for="timeSelect">Time (minutes):</label>
+                            <select id="timeSelect">
+                                <option value="3">3 minutes</option>
+                                <option value="5" selected>5 minutes</option>
+                                <option value="10">10 minutes</option>
+                            </select>
+                        </div>
+                        <div class="setting-group">
+                            <label for="questionSelect">Number of Questions:</label>
+                            <select id="questionSelect">
+                                <option value="3">3 questions</option>
+                                <option value="5">5 questions</option>
+                                <option value="10" selected>10 questions</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Start Button -->
+                <div class="setup-card">
+                    <button id="startBtn" class="btn btn-primary btn-lg" disabled>
+                        Start Quiz
+                    </button>
+                    <p class="info-text">* Please select a topic to begin</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>&copy; 2026 QuizMaster. All rights reserved. | Professional Learning Platform</p>
+        </footer>
+    </div>
+
+    <!-- Quiz Screen -->
+    <div id="quizScreen" class="screen" style="display: none;">
+        <div class="quiz-header">
+            <div class="quiz-info">
+                <span class="topic-badge" id="topicDisplay"></span>
+                <span class="question-counter" id="questionCounter"></span>
+            </div>
+            <div class="timer" id="timer">
+                <span class="timer-icon">⏱️</span>
+                <span id="timeDisplay">10:00</span>
+            </div>
+        </div>
+
+        <div class="quiz-container">
+            <div class="question-section">
+                <div class="question-header">
+                    <h2 id="questionText"></h2>
+                </div>
+
+                <!-- Image Container -->
+                <div id="imageContainer" class="image-container" style="display: none;">
+                    <img id="questionImage" src="" alt="Question Image" class="question-image">
+                </div>
+
+                <!-- Options -->
+                <div class="options-container" id="optionsContainer"></div>
+            </div>
+
+            <!-- Navigation Controls -->
+            <div class="quiz-controls">
+                <button id="prevBtn" class="btn btn-secondary" disabled>
+                    ← Previous
+                </button>
+                <button id="nextBtn" class="btn btn-secondary">
+                    Next →
+                </button>
+                <button id="submitBtn" class="btn btn-success" style="display: none;">
+                    Submit Quiz
+                </button>
+            </div>
+
+            <!-- Question Progress -->
+            <div class="progress-section">
+                <div class="progress-bar">
+                    <div id="progressFill" class="progress-fill"></div>
+                </div>
+                <p id="progressText" class="progress-text"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Screen -->
+    <div id="resultsScreen" class="screen" style="display: none;">
+        <nav class="navbar">
+            <div class="nav-container">
+                <h1 class="logo">📝 QuizMaster</h1>
+                <div class="nav-info">
+                    <span>Quiz Results</span>
+                </div>
+            </div>
+        </nav>
+
+        <section class="results-section">
+            <div class="container">
+                <div class="results-card">
+                    <div class="results-header">
+                        <h1>Quiz Completed! 🎉</h1>
+                        <p id="topicResultDisplay"></p>
+                    </div>
+
+                    <div class="score-display">
+                        <div class="score-circle">
+                            <span id="scorePercentage"></span>
+                            <p>Score</p>
+                        </div>
+                        <div class="score-details">
+                            <p><strong>Total Questions:</strong> <span id="totalQuestionsResult"></span></p>
+                            <p><strong>Correct Answers:</strong> <span id="correctAnswersResult"></span></p>
+                            <p><strong>Wrong Answers:</strong> <span id="wrongAnswersResult"></span></p>
+                            <p><strong>Time Taken:</strong> <span id="timeTakenResult"></span></p>
+                        </div>
+                    </div>
+
+                    <div class="feedback-section">
+                        <h3 id="feedbackTitle"></h3>
+                        <p id="feedbackMessage"></p>
+                    </div>
+
+                    <!-- Review Section -->
+                    <div class="review-section">
+                        <h3>Review Your Answers</h3>
+                        <div id="reviewContainer" class="review-container"></div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="results-actions">
+                        <button id="retakeBtn" class="btn btn-primary">
+                            Retake Quiz
+                        </button>
+                        <button id="homeBtn" class="btn btn-secondary">
+                            Back to Home
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>&copy; 2026 QuizMaster. All rights reserved. | Keep Learning!</p>
+        </footer>
+    </div>
+
+    <script src="quiz-script.js"></script>
+</body>
+</html>
